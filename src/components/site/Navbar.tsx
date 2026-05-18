@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X, Stethoscope, Moon, Sun } from "lucide-react";
@@ -17,7 +17,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
-  const { location } = useRouterState();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -85,19 +85,19 @@ export function Navbar() {
             <button
               aria-label="Toggle theme"
               onClick={() => setDark((d) => !d)}
-              className="hidden md:grid place-items-center size-9 rounded-lg hover:bg-muted text-foreground/70 transition"
+              className="hidden md:grid place-items-center size-9 rounded-lg hover:bg-muted text-foreground/70 transition cursor-pointer"
             >
               {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
             </button>
             <Link to="/booking" className="hidden md:inline-flex">
-              <Button className="rounded-full bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95 hover:scale-105 transition-transform">
+              <Button className="rounded-full bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95 hover:scale-105 transition-transform cursor-pointer">
                 Book Appointment
               </Button>
             </Link>
             <button
               aria-label="Menu"
               onClick={() => setOpen((o) => !o)}
-              className="lg:hidden grid place-items-center size-10 rounded-lg hover:bg-muted"
+              className="lg:hidden grid place-items-center size-10 rounded-lg hover:bg-muted cursor-pointer"
             >
               {open ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>

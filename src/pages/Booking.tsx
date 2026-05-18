@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Check, ChevronLeft, Calendar, Clock, User, Sparkles, CheckCircle2, ArrowRight, Stethoscope, HeartPulse, Brain, Baby, Bone, Eye
 } from "lucide-react";
@@ -8,16 +8,6 @@ import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-
-export const Route = createFileRoute("/booking")({
-  component: Booking,
-  head: () => ({
-    meta: [
-      { title: "Book an Appointment — Medora" },
-      { name: "description", content: "Reserve a slot with a Medora specialist in under a minute. Same-day & video consultations available." },
-    ],
-  }),
-});
 
 const specializations = ["General Medicine", "Cardiology", "Neurology", "Pediatrics", "Orthopedics", "Ophthalmology"];
 const specIcons: Record<string, any> = {
@@ -53,7 +43,10 @@ function next7Days() {
   return out;
 }
 
-function Booking() {
+export default function Booking() {
+  const [searchParams] = useSearchParams();
+  const specialtyParam = searchParams.get("specialty");
+
   const [step, setStep] = useState(0);
   const [spec, setSpec] = useState<string | null>(null);
   const [doctor, setDoctor] = useState<string | null>(null);
@@ -61,6 +54,14 @@ function Booking() {
   const [slot, setSlot] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", phone: "", note: "" });
   const [done, setDone] = useState(false);
+
+  // Initialize from search parameters if present
+  useEffect(() => {
+    if (specialtyParam && specializations.includes(specialtyParam)) {
+      setSpec(specialtyParam);
+      setStep(1); // Skip specialty selection step if passed via query param
+    }
+  }, [specialtyParam]);
 
   const days = useMemo(() => next7Days(), []);
   const filtered = doctor ? doctors.filter((d) => d.name === doctor) : doctors.filter((d) => !spec || d.spec === spec);
@@ -150,7 +151,7 @@ function Booking() {
                               key={s}
                               onClick={() => setSpec(s)}
                               className={cn(
-                                "p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-32 cursor-pointer",
+                                "p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-32 cursor-pointer w-full",
                                 spec === s ? "border-primary bg-primary/8 ring-2 ring-primary/20" : "hover:bg-muted hover:shadow-soft hover:-translate-y-1"
                               )}
                             >
@@ -181,11 +182,11 @@ function Booking() {
                             key={d.name}
                             onClick={() => setDoctor(d.name)}
                             className={cn(
-                              "p-4 rounded-2xl border text-left flex items-center gap-3 transition-all duration-300",
+                              "p-4 rounded-2xl border text-left flex items-center gap-3 transition-all duration-300 w-full cursor-pointer",
                               doctor === d.name ? "border-primary bg-primary/8 ring-2 ring-primary/20" : "hover:bg-muted hover:shadow-soft hover:-translate-y-1"
                             )}
                           >
-                            <div className="size-12 rounded-xl bg-gradient-primary text-primary-foreground grid place-items-center font-bold">{d.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}</div>
+                            <div className="size-12 rounded-xl bg-gradient-primary text-primary-foreground grid place-items-center font-bold shrink-0">{d.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}</div>
                             <div className="flex-1 min-w-0">
                               <p className="font-semibold truncate">{d.name}</p>
                               <p className="text-xs text-muted-foreground">{d.spec} · {d.exp}</p>
@@ -213,7 +214,7 @@ function Booking() {
                               key={key}
                               onClick={() => setDate(key)}
                               className={cn(
-                                "shrink-0 px-4 py-3 rounded-2xl border text-center min-w-[78px] transition-all duration-300",
+                                "shrink-0 px-4 py-3 rounded-2xl border text-center min-w-[78px] transition-all duration-300 cursor-pointer",
                                 active ? "border-primary bg-gradient-primary text-primary-foreground shadow-glow" : "hover:bg-muted hover:-translate-y-1"
                               )}
                             >
@@ -237,7 +238,7 @@ function Booking() {
                                 disabled={off}
                                 onClick={() => setSlot(s)}
                                 className={cn(
-                                  "px-3 py-2 rounded-xl text-sm border transition-all duration-300",
+                                  "px-3 py-2 rounded-xl text-sm border transition-all duration-300 w-full cursor-pointer",
                                   off ? "opacity-40 cursor-not-allowed line-through" :
                                   active ? "bg-gradient-primary text-primary-foreground border-transparent shadow-glow" : "hover:bg-muted hover:border-primary/50 hover:shadow-sm"
                                 )}

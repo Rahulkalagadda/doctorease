@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Stethoscope, Phone, Mail, MapPin, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 
 export function Footer() {

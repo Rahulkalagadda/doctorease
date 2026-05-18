@@ -1,19 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, HeartHandshake, ShieldCheck, Users } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
-
-export const Route = createFileRoute("/about")({
-  component: About,
-  head: () => ({
-    meta: [
-      { title: "About Medora — Our Doctors & Story" },
-      { name: "description", content: "Meet the team behind Medora — board-certified specialists redefining patient-centered care." },
-    ],
-  }),
-});
 
 const doctors = [
   { name: "Dr. Maya Patel, MD", role: "Internal Medicine · 12 yrs", initials: "MP", rating: "4.9" },
@@ -29,7 +19,7 @@ const values = [
   { icon: Award, title: "World-class team", desc: "Top 1% physicians from Stanford, Hopkins and Mayo." },
 ];
 
-function About() {
+export default function About() {
   return (
     <>
       <PageHero

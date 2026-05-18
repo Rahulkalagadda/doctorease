@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   HeartPulse, Brain, Baby, Bone, Eye, Stethoscope, Activity, Syringe, Microscope, Pill, ShieldPlus, Video,
@@ -6,16 +6,6 @@ import {
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
-
-export const Route = createFileRoute("/services")({
-  component: Services,
-  head: () => ({
-    meta: [
-      { title: "Services — Medora" },
-      { name: "description", content: "Specialty consultations, diagnostics, vaccinations, video care and more from board-certified doctors." },
-    ],
-  }),
-});
 
 const all = [
   { icon: HeartPulse, title: "Cardiology", price: "₹899", desc: "ECG, echo, stress tests and chronic heart care." },
@@ -32,7 +22,7 @@ const all = [
   { icon: Video, title: "Video Consultation", price: "₹299", desc: "Secure, tele-visits." },
 ];
 
-function Services() {
+export default function Services() {
   return (
     <>
       <PageHero

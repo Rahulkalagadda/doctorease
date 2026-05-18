@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, MapPin, Phone, MessageCircle, Clock } from "lucide-react";
@@ -7,17 +6,7 @@ import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/contact")({
-  component: Contact,
-  head: () => ({
-    meta: [
-      { title: "Contact Medora" },
-      { name: "description", content: "Get in touch with our care team. Visit our clinic, call us, or send a message." },
-    ],
-  }),
-});
-
-function Contact() {
+export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   return (
     <>
@@ -62,7 +51,7 @@ function Contact() {
           <motion.form
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             onSubmit={(e) => { e.preventDefault(); toast.success("Message sent! Our team will respond shortly."); setForm({ name: "", email: "", message: "" }); }}
-            className="rounded-3xl bg-card border shadow-card p-6 md:p-8 h-fit"
+            className="rounded-3xl bg-card border shadow-card p-6 md:p-8 h-fit w-full"
           >
             <h3 className="text-2xl font-bold">Send us a message</h3>
             <p className="text-sm text-muted-foreground mt-1">Typical reply within an hour.</p>
@@ -79,7 +68,7 @@ function Contact() {
                 <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Message</span>
                 <textarea rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required className="mt-1 w-full rounded-xl border bg-background px-4 py-3 outline-none focus:ring-2 ring-primary/30" />
               </label>
-              <Button type="submit" className="w-full h-12 rounded-xl bg-gradient-primary text-primary-foreground">Send message</Button>
+              <Button type="submit" className="w-full h-12 rounded-xl bg-gradient-primary text-primary-foreground cursor-pointer">Send message</Button>
             </div>
           </motion.form>
         </div>

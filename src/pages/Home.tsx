@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar, Shield, Star, ArrowRight, CheckCircle2, Stethoscope, HeartPulse, Brain,
@@ -10,16 +10,6 @@ import heroDoctor from "@/assets/hero-doctor.jpg";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/site/Section";
 import { cn } from "@/lib/utils";
-
-export const Route = createFileRoute("/")({
-  component: Home,
-  head: () => ({
-    meta: [
-      { title: "Medora — Modern Healthcare, Closer to You" },
-      { name: "description", content: "Book trusted doctors instantly, chat with our AI care assistant, and manage your health from anywhere." },
-    ],
-  }),
-});
 
 const services = [
   { icon: HeartPulse, title: "Cardiology", desc: "Heart screenings, ECG, and chronic care led by board-certified cardiologists.", color: "from-rose-500/15 to-rose-500/5" },
@@ -146,7 +136,7 @@ function CustomSelect({ label, value, onChange, options }: CustomSelectProps) {
   );
 }
 
-function Home() {
+export default function Home() {
   const [selectedSpecialty, setSelectedSpecialty] = useState("General Medicine");
   const [selectedConsult, setSelectedConsult] = useState("in-clinic");
   const [selectedDate, setSelectedDate] = useState("today");
@@ -185,7 +175,7 @@ function Home() {
               className="mt-8 flex flex-wrap gap-4"
             >
               <Link to="/booking">
-                <Button size="lg" className="rounded-full h-12 px-6 bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95 hover:scale-[1.02] transition-transform">
+                <Button size="lg" className="rounded-full h-12 px-6 bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95 hover:scale-[1.02] transition-transform animate-pulse-subtle">
                   <Calendar className="mr-2 size-4" /> Book Appointment
                 </Button>
               </Link>
@@ -424,7 +414,7 @@ function Home() {
             <div className="mt-7">
               <button
                 onClick={() => document.querySelector<HTMLButtonElement>('[aria-label="Open Medora AI"]')?.click()}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-primary text-primary-foreground px-6 h-12 font-medium shadow-soft hover:opacity-95"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-primary text-primary-foreground px-6 h-12 font-medium shadow-soft hover:opacity-95 cursor-pointer"
               >
                 Try Medora AI <ArrowRight className="size-4" />
               </button>
@@ -438,25 +428,25 @@ function Home() {
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-primary opacity-10 blur-3xl rounded-full" />
             <div className="relative">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="size-10 rounded-xl bg-gradient-primary text-primary-foreground grid place-items-center"><Sparkles className="size-5" /></div>
-              <div>
-                <p className="font-semibold">Medora AI</p>
-                <p className="text-xs text-muted-foreground">Online now</p>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="size-10 rounded-xl bg-gradient-primary text-primary-foreground grid place-items-center"><Sparkles className="size-5" /></div>
+                <div>
+                  <p className="font-semibold">Medora AI</p>
+                  <p className="text-xs text-muted-foreground">Online now</p>
+                </div>
               </div>
-            </div>
-            <div className="space-y-3">
-              <div className="max-w-[80%] bg-muted rounded-2xl rounded-bl-md px-4 py-2.5 text-sm">Hi! How can I help today?</div>
-              <div className="max-w-[80%] ml-auto bg-gradient-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-2.5 text-sm">I have a mild fever and headache.</div>
-              <div className="max-w-[85%] bg-muted rounded-2xl rounded-bl-md px-4 py-2.5 text-sm">
-                Got it. I can book you with Dr. Patel in General Medicine today at 3:40 PM. Shall I confirm?
+              <div className="space-y-3">
+                <div className="max-w-[80%] bg-muted rounded-2xl rounded-bl-md px-4 py-2.5 text-sm">Hi! How can I help today?</div>
+                <div className="max-w-[80%] ml-auto bg-gradient-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-2.5 text-sm">I have a mild fever and headache.</div>
+                <div className="max-w-[85%] bg-muted rounded-2xl rounded-bl-md px-4 py-2.5 text-sm">
+                  Got it. I can book you with Dr. Patel in General Medicine today at 3:40 PM. Shall I confirm?
+                </div>
               </div>
-            </div>
-            <div className="mt-5 flex gap-2 flex-wrap">
-              {["Yes, book it", "Other times", "Video consult"].map((c) => (
-                <span key={c} className="text-xs px-3 py-1.5 rounded-full border bg-card">{c}</span>
-              ))}
-            </div>
+              <div className="mt-5 flex gap-2 flex-wrap">
+                {["Yes, book it", "Other times", "Video consult"].map((c) => (
+                  <span key={c} className="text-xs px-3 py-1.5 rounded-full border bg-card">{c}</span>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -476,16 +466,16 @@ function Home() {
               <div className="absolute -top-4 -right-2 text-9xl text-primary/5 font-serif select-none pointer-events-none group-hover:text-primary/10 transition-colors">"</div>
               <div className="relative">
                 <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: t.rating }).map((_, k) => <Star key={k} className="size-4 fill-amber-500 text-amber-500" />)}
-              </div>
-              <p className="text-foreground/90 leading-relaxed">"{t.quote}"</p>
-              <div className="mt-5 flex items-center gap-3">
-                <div className="size-10 rounded-full bg-gradient-primary text-primary-foreground grid place-items-center font-semibold">{t.name.charAt(0)}</div>
-                <div>
-                  <p className="font-semibold text-sm">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.role}</p>
+                  {Array.from({ length: t.rating }).map((_, k) => <Star key={k} className="size-4 fill-amber-500 text-amber-500" />)}
                 </div>
-              </div>
+                <p className="text-foreground/90 leading-relaxed">"{t.quote}"</p>
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="size-10 rounded-full bg-gradient-primary text-primary-foreground grid place-items-center font-semibold">{t.name.charAt(0)}</div>
+                  <div>
+                    <p className="font-semibold text-sm">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}

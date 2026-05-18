@@ -1,18 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/Section";
-
-export const Route = createFileRoute("/blog")({
-  component: Blog,
-  head: () => ({
-    meta: [
-      { title: "Health Tips & Stories — Medora" },
-      { name: "description", content: "Evidence-based health tips, doctor insights and patient stories from the Medora team." },
-    ],
-  }),
-});
 
 const posts = [
   { tag: "Heart Health", title: "5 daily habits proven to lower blood pressure", time: "6 min read", grad: "from-rose-400/30 to-rose-200/30" },
@@ -23,7 +12,7 @@ const posts = [
   { tag: "Wellness", title: "Mindful breathing: 4 techniques for busy days", time: "3 min read", grad: "from-teal-400/30 to-teal-200/30" },
 ];
 
-function Blog() {
+export default function Blog() {
   return (
     <>
       <PageHero
@@ -51,7 +40,7 @@ function Blog() {
                 <h3 className="mt-3 font-semibold text-lg leading-snug">{p.title}</h3>
                 <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
                   <span className="flex items-center gap-1"><Clock className="size-3.5" /> {p.time}</span>
-                  <span className="text-primary font-medium inline-flex items-center group-hover:translate-x-1 transition">Read <ArrowRight className="size-4 ml-1" /></span>
+                  <span className="text-primary font-medium inline-flex items-center group-hover:translate-x-1 transition cursor-pointer">Read <ArrowRight className="size-4 ml-1" /></span>
                 </div>
               </div>
             </motion.article>
