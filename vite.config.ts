@@ -5,9 +5,11 @@ import tsConfigPaths from "vite-tsconfig-paths";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
+const isCloudflare = process.env.CLOUDFLARE === "true" || !!process.env.CF_PAGES;
+
 export default defineConfig({
   plugins: [
-    cloudflare(),
+    ...(isCloudflare ? [cloudflare()] : []),
     tanstackStart({
       server: { entry: "server" },
     }),

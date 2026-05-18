@@ -10,7 +10,13 @@
   "assets": {
     "directory": "dist/client"
   },
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": ["**/*.js", "**/*.mjs"]
+    }
+  ],
   "build": {
-    "command": "mkdir -p dist/doctorease && touch dist/doctorease/index.js && (bun run build || npm run build)"
+    "command": "mkdir -p dist/doctorease && touch dist/doctorease/index.js && export CLOUDFLARE=true && (bun run build || npm run build)"
   }
 }
