@@ -6,5 +6,8 @@
   "main": "dist/tanstack_start_app/index.js",
   "assets": {
     "directory": "dist/client"
+  },
+  "build": {
+    "command": "bun run build || npm run build"
   }
 }
