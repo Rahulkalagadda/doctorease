@@ -202,7 +202,7 @@ export default function Home() {
             className="relative"
           >
             <div className="relative rounded-3xl overflow-hidden shadow-glow bg-gradient-primary aspect-[4/5] max-w-md mx-auto">
-              <img src={heroDoctor} alt="Dr. Maya Patel" className="w-full h-full object-cover mix-blend-luminosity opacity-95" />
+              <img src={heroDoctor} alt="Dr. Maya Patel" className="w-full h-full object-cover" />
               <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/60 to-transparent text-white">
                 <p className="text-sm opacity-90">Featured Specialist</p>
                 <p className="text-xl font-semibold">Dr. Maya Patel, MD</p>

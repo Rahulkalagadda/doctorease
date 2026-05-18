@@ -85,38 +85,46 @@ export default function Booking() {
       <section className="pt-28 md:pt-32 pb-6 bg-hero">
         <div className="container-px mx-auto max-w-5xl text-center">
           <span className="inline-flex text-xs font-medium uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full">Book in 60 seconds</span>
-          <h1 className="mt-4 text-4xl md:text-5xl font-bold tracking-tight">Reserve your <span className="text-gradient">appointment</span></h1>
-          <p className="mt-3 text-muted-foreground">Real-time availability — same-day slots included.</p>
+          <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">Reserve your <span className="text-gradient">appointment</span></h1>
+          <p className="mt-3 text-muted-foreground text-sm sm:text-base">Real-time availability — same-day slots included.</p>
         </div>
       </section>
 
-      <Section className="!pt-10">
+      <Section className="!pt-6 sm:!pt-10">
         <div className="max-w-4xl mx-auto">
           {/* Stepper */}
           <div className="glass rounded-2xl p-3 md:p-4 shadow-card mb-8">
-            <div className="flex items-center justify-between gap-2">
+            <div className="text-center mb-3 md:hidden">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                Step {step + 1} of {steps.length}
+              </p>
+              <p className="text-sm font-bold text-foreground mt-0.5">
+                {steps[step]}
+              </p>
+            </div>
+            <div className="flex items-center justify-between gap-1 md:gap-2">
               {steps.map((s, i) => {
                 const active = i === step;
                 const complete = i < step || done;
                 return (
-                  <div key={s} className="flex-1 flex items-center gap-2 min-w-0">
+                  <div key={s} className={cn("flex items-center gap-1 md:gap-2 min-w-0", i < steps.length - 1 ? "flex-1" : "")}>
                     <div className={cn(
-                      "size-8 rounded-full grid place-items-center text-xs font-semibold shrink-0 transition",
+                      "size-7 sm:size-8 rounded-full grid place-items-center text-xs font-semibold shrink-0 transition",
                       complete ? "bg-gradient-primary text-primary-foreground" :
                       active ? "bg-primary/15 text-primary ring-2 ring-primary/30" :
                       "bg-muted text-muted-foreground"
                     )}>
                       {complete ? <Check className="size-4" /> : i + 1}
                     </div>
-                    <span className={cn("text-xs md:text-sm font-medium truncate", active ? "text-foreground" : "text-muted-foreground")}>{s}</span>
-                    {i < steps.length - 1 && <div className="flex-1 h-px bg-border hidden md:block" />}
+                    <span className={cn("text-xs md:text-sm font-medium truncate hidden md:block", active ? "text-foreground" : "text-muted-foreground")}>{s}</span>
+                    {i < steps.length - 1 && <div className="flex-1 h-px bg-border" />}
                   </div>
                 );
               })}
             </div>
           </div>
 
-          <div className="bg-card border rounded-3xl shadow-card p-6 md:p-8 min-h-[420px]">
+          <div className="bg-card border rounded-3xl shadow-card p-4 sm:p-6 md:p-8 min-h-[420px]">
             <AnimatePresence mode="wait">
               {done ? (
                 <motion.div key="done" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-10">
@@ -141,9 +149,9 @@ export default function Booking() {
                 <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
                   {step === 0 && (
                     <div>
-                      <h2 className="text-2xl font-bold flex items-center gap-2"><Sparkles className="size-5 text-primary" /> What do you need help with?</h2>
-                      <p className="text-muted-foreground mt-1">Choose a specialty to see matching doctors.</p>
-                      <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2"><Sparkles className="size-5 text-primary" /> What do you need help with?</h2>
+                      <p className="text-muted-foreground text-sm sm:text-base mt-1">Choose a specialty to see matching doctors.</p>
+                      <div className="mt-6 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                         {specializations.map((s) => {
                           const Icon = specIcons[s] || Stethoscope;
                           return (
@@ -151,19 +159,19 @@ export default function Booking() {
                               key={s}
                               onClick={() => setSpec(s)}
                               className={cn(
-                                "p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-32 cursor-pointer w-full",
+                                "p-3 sm:p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group flex flex-col justify-between h-28 sm:h-32 cursor-pointer w-full",
                                 spec === s ? "border-primary bg-primary/8 ring-2 ring-primary/20" : "hover:bg-muted hover:shadow-soft hover:-translate-y-1"
                               )}
                             >
                               <div className="flex items-start justify-between w-full">
-                                <div className={cn("size-10 rounded-xl grid place-items-center transition-transform group-hover:scale-110", spec === s ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary")}>
-                                  <Icon className="size-5" />
+                                <div className={cn("size-9 sm:size-10 rounded-xl grid place-items-center transition-transform group-hover:scale-110", spec === s ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary")}>
+                                  <Icon className="size-4 sm:size-5" />
                                 </div>
                                 {spec === s && <Check className="size-4 text-primary" />}
                               </div>
                               <div>
-                                <p className="font-bold text-foreground text-sm tracking-tight">{s}</p>
-                                <p className="text-xs text-muted-foreground mt-1">From ₹499 · Available today</p>
+                                <p className="font-bold text-foreground text-xs sm:text-sm tracking-tight">{s}</p>
+                                <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:mt-1">From ₹499 · Today</p>
                               </div>
                             </button>
                           );
@@ -174,8 +182,8 @@ export default function Booking() {
 
                   {step === 1 && (
                     <div>
-                      <h2 className="text-2xl font-bold flex items-center gap-2"><User className="size-5 text-primary" /> Pick a doctor</h2>
-                      <p className="text-muted-foreground mt-1">All physicians are board-certified.</p>
+                      <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2"><User className="size-5 text-primary" /> Pick a doctor</h2>
+                      <p className="text-muted-foreground text-sm sm:text-base mt-1">All physicians are board-certified.</p>
                       <div className="mt-6 grid sm:grid-cols-2 gap-3">
                         {filtered.map((d) => (
                           <button
@@ -188,7 +196,7 @@ export default function Booking() {
                           >
                             <div className="size-12 rounded-xl bg-gradient-primary text-primary-foreground grid place-items-center font-bold shrink-0">{d.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}</div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-semibold truncate">{d.name}</p>
+                              <p className="font-semibold text-sm sm:text-base truncate">{d.name}</p>
                               <p className="text-xs text-muted-foreground">{d.spec} · {d.exp}</p>
                               <p className="text-xs mt-1 text-emerald-600 dark:text-emerald-400">★ {d.rating} · Available today</p>
                             </div>
@@ -200,9 +208,9 @@ export default function Booking() {
 
                   {step === 2 && (
                     <div>
-                      <h2 className="text-2xl font-bold flex items-center gap-2"><Calendar className="size-5 text-primary" /> Choose date & time</h2>
-                      <p className="text-muted-foreground mt-1">Real-time slot availability.</p>
-                      <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
+                      <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2"><Calendar className="size-5 text-primary" /> Choose date & time</h2>
+                      <p className="text-muted-foreground text-sm sm:text-base mt-1">Real-time slot availability.</p>
+                      <div className="mt-5 flex gap-2 overflow-x-auto pb-2 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         {days.map((d) => {
                           const key = d.toDateString();
                           const dayName = d.toLocaleDateString(undefined, { weekday: "short" });
@@ -254,8 +262,8 @@ export default function Booking() {
 
                   {step === 3 && (
                     <div>
-                      <h2 className="text-2xl font-bold flex items-center gap-2"><User className="size-5 text-primary" /> Your details</h2>
-                      <p className="text-muted-foreground mt-1">We'll only use this for your appointment.</p>
+                      <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2"><User className="size-5 text-primary" /> Your details</h2>
+                      <p className="text-muted-foreground text-sm sm:text-base mt-1">We'll only use this for your appointment.</p>
                       <div className="mt-6 grid sm:grid-cols-2 gap-4">
                         {[
                           { k: "name", label: "Full name", placeholder: "Jane Doe" },
@@ -269,7 +277,7 @@ export default function Booking() {
                               value={(form as any)[f.k]}
                               onChange={(e) => setForm({ ...form, [f.k]: e.target.value })}
                               placeholder={f.placeholder}
-                              className="mt-1 w-full h-12 rounded-xl border bg-background px-4 outline-none focus:ring-2 ring-primary/30"
+                              className="mt-1 w-full h-12 rounded-xl border bg-background px-4 outline-none focus:ring-2 ring-primary/30 text-base"
                             />
                           </label>
                         ))}
@@ -280,7 +288,7 @@ export default function Booking() {
                             value={form.note}
                             onChange={(e) => setForm({ ...form, note: e.target.value })}
                             placeholder="Symptoms, allergies, history…"
-                            className="mt-1 w-full rounded-xl border bg-background px-4 py-3 outline-none focus:ring-2 ring-primary/30"
+                            className="mt-1 w-full rounded-xl border bg-background px-4 py-3 outline-none focus:ring-2 ring-primary/30 text-base"
                           />
                         </label>
                       </div>
@@ -289,21 +297,21 @@ export default function Booking() {
 
                   {step === 4 && (
                     <div>
-                      <h2 className="text-2xl font-bold">Confirm your booking</h2>
-                      <p className="text-muted-foreground mt-1">Please review the details below.</p>
-                      <div className="mt-6 grid sm:grid-cols-2 gap-3">
+                      <h2 className="text-xl sm:text-2xl font-bold">Confirm your booking</h2>
+                      <p className="text-muted-foreground text-sm sm:text-base mt-1">Please review the details below.</p>
+                      <div className="mt-6 grid grid-cols-2 gap-3">
                         {[
-                          { k: "Specialty", v: spec },
-                          { k: "Doctor", v: doctor },
-                          { k: "Date", v: date },
-                          { k: "Time", v: slot },
-                          { k: "Name", v: form.name },
-                          { k: "Email", v: form.email },
-                          { k: "Phone", v: form.phone },
+                          { k: "Specialty", v: spec, full: false },
+                          { k: "Doctor", v: doctor, full: false },
+                          { k: "Date", v: date, full: false },
+                          { k: "Time", v: slot, full: false },
+                          { k: "Name", v: form.name, full: true },
+                          { k: "Email", v: form.email, full: true },
+                          { k: "Phone", v: form.phone, full: true },
                         ].map((r) => (
-                          <div key={r.k} className="rounded-2xl border p-4 bg-muted/30">
-                            <p className="text-[11px] uppercase tracking-wider text-muted-foreground">{r.k}</p>
-                            <p className="font-semibold mt-1">{r.v}</p>
+                          <div key={r.k} className={cn("rounded-2xl border p-3 md:p-4 bg-muted/30", r.full ? "col-span-2" : "col-span-1")}>
+                            <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-muted-foreground">{r.k}</p>
+                            <p className="font-semibold text-sm sm:text-base mt-1 break-words">{r.v}</p>
                           </div>
                         ))}
                       </div>
