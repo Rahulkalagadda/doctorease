@@ -5,8 +5,12 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "main": "src/server.ts",
+  "main": "dist/doctorease/index.js",
+  "no_bundle": true,
+  "assets": {
+    "directory": "dist/client"
+  },
   "build": {
-    "command": "bun run build || npm run build"
+    "command": "mkdir -p dist/doctorease && touch dist/doctorease/index.js && (bun run build || npm run build)"
   }
 }
