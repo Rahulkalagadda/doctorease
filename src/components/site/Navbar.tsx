@@ -46,7 +46,7 @@ export function Navbar() {
         <div
           className={cn(
             "flex items-center justify-between rounded-2xl px-4 md:px-6 h-14 md:h-16 transition-all",
-            scrolled ? "glass shadow-card" : "bg-transparent"
+            (scrolled || open) ? "bg-white dark:bg-card border border-border shadow-card" : "bg-transparent"
           )}
         >
           <Link to="/" className="flex items-center gap-2 font-display font-bold text-lg">
@@ -108,7 +108,7 @@ export function Navbar() {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:hidden mt-2 glass rounded-2xl p-3 shadow-card"
+            className="lg:hidden mt-2 bg-white dark:bg-card border border-border rounded-2xl p-3 shadow-card"
           >
             <div className="flex flex-col">
               {links.map((l) => (
