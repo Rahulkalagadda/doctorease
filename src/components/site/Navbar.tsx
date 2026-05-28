@@ -89,11 +89,32 @@ export function Navbar() {
             >
               {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
             </button>
-            <Link to="/booking" className="hidden md:inline-flex">
-              <Button className="rounded-full bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95 hover:scale-105 transition-transform cursor-pointer">
-                Book Appointment
-              </Button>
-            </Link>
+
+            {localStorage.getItem("userRole") ? (
+              <Link to={
+                localStorage.getItem("userRole")?.toLowerCase() === "patient" ? "/patient/dashboard" :
+                  localStorage.getItem("userRole")?.toLowerCase() === "doctor" ? "/doctor/dashboard" :
+                    "/admin/dashboard"
+              }>
+                <Button className="rounded-full bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95 hover:scale-105 transition-transform cursor-pointer">
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link to="/login">
+                  <Button variant="outline" className="rounded-full border border-primary/20 text-foreground hover:bg-muted transition cursor-pointer">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/booking" className="hidden md:inline-flex">
+                  <Button className="rounded-full bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95 hover:scale-105 transition-transform cursor-pointer">
+                    Book Appointment
+                  </Button>
+                </Link>
+              </div>
+            )}
+
             <button
               aria-label="Menu"
               onClick={() => setOpen((o) => !o)}
@@ -120,11 +141,30 @@ export function Navbar() {
                   {l.label}
                 </Link>
               ))}
-              <Link to="/booking" className="mt-2">
-                <Button className="w-full rounded-xl bg-gradient-primary text-primary-foreground">
-                  Book Appointment
-                </Button>
-              </Link>
+              {localStorage.getItem("userRole") ? (
+                <Link to={
+                  localStorage.getItem("userRole")?.toLowerCase() === "patient" ? "/patient/dashboard" :
+                    localStorage.getItem("userRole")?.toLowerCase() === "doctor" ? "/doctor/dashboard" :
+                      "/admin/dashboard"
+                } className="mt-2">
+                  <Button className="w-full rounded-xl bg-gradient-primary text-primary-foreground">
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <div className="flex flex-col gap-2 mt-2">
+                  <Link to="/login">
+                    <Button variant="outline" className="w-full rounded-xl border border-primary/20 text-foreground">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/booking">
+                    <Button className="w-full rounded-xl bg-gradient-primary text-primary-foreground">
+                      Book Appointment
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

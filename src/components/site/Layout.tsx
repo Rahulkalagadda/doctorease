@@ -4,6 +4,7 @@ import { Footer } from "@/components/site/Footer";
 import { Chatbot } from "@/components/site/Chatbot";
 import { WhatsappCTA } from "@/components/site/WhatsappCTA";
 import { Toaster } from "@/components/ui/sonner";
+import { useLocation } from "react-router-dom";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,15 +20,24 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
+  const location = useLocation();
+  
+  // Detect if the route is an app workspace, dashboard, consultation room, or clean auth page
+  const isWorkspace = 
+    location.pathname.startsWith("/patient") || 
+    location.pathname.startsWith("/doctor") || 
+    location.pathname.startsWith("/admin") ||
+    ["/login", "/register", "/forgot-password"].includes(location.pathname);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <Navbar />
+      {!isWorkspace && <Navbar />}
       <main className="min-h-screen">
         {children}
       </main>
-      <Footer />
-      <Chatbot />
-      <WhatsappCTA />
+      {!isWorkspace && <Footer />}
+      {!isWorkspace && <Chatbot />}
+      {!isWorkspace && <WhatsappCTA />}
       <Toaster />
     </QueryClientProvider>
   );

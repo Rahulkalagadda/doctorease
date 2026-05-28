@@ -8,6 +8,13 @@ import Services from "@/pages/Services";
 import Blog from "@/pages/Blog";
 import Booking from "@/pages/Booking";
 import Contact from "@/pages/Contact";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import ForgotPassword from "@/pages/ForgotPassword";
+import PatientDashboard from "@/pages/PatientDashboard";
+import DoctorDashboard from "@/pages/DoctorDashboard";
+import ConsultationRoom from "@/pages/ConsultationRoom";
+import AdminDashboard from "@/pages/AdminDashboard";
 import "./styles.css";
 
 function App() {
@@ -21,6 +28,21 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/contact" element={<Contact />} />
+          
+          {/* Auth Pages */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          
+          {/* Patient Workspace */}
+          <Route path="/patient/dashboard" element={<PatientDashboard />} />
+          
+          {/* Doctor Workspace */}
+          <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+          <Route path="/doctor/consultation/:id" element={<ConsultationRoom />} />
+          
+          {/* Admin Workspace */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route
             path="*"
             element={

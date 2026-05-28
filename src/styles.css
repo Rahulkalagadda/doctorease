@@ -141,4 +141,13 @@
   .shadow-card { box-shadow: var(--shadow-card); }
   .container-px { padding-left: 1.25rem; padding-right: 1.25rem; }
   @media (min-width: 768px) { .container-px { padding-left: 2rem; padding-right: 2rem; } }
+  
+  /* Scrollbar Hide Utility */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }
