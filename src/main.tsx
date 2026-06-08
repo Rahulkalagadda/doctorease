@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "@/components/site/Layout";
@@ -8,6 +8,7 @@ import Services from "@/pages/Services";
 import Blog from "@/pages/Blog";
 import Booking from "@/pages/Booking";
 import Contact from "@/pages/Contact";
+import Pricing from "@/pages/Pricing";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import ForgotPassword from "@/pages/ForgotPassword";
@@ -15,7 +16,29 @@ import PatientDashboard from "@/pages/PatientDashboard";
 import DoctorDashboard from "@/pages/DoctorDashboard";
 import ConsultationRoom from "@/pages/ConsultationRoom";
 import AdminDashboard from "@/pages/AdminDashboard";
+import ReceptionistDashboard from "@/pages/ReceptionistDashboard";
+import LabDashboard from "@/pages/LabDashboard";
+import PharmacistDashboard from "@/pages/PharmacistDashboard";
 import "./styles.css";
+
+// Lazy-loaded standalone feature pages
+const PrescriptionBuilderComp = lazy(() => import("@/pages/PrescriptionBuilder"));
+const AnalyticsPageComp = lazy(() => import("@/pages/AnalyticsPage"));
+const CRMPageComp = lazy(() => import("@/pages/CRMPage"));
+
+const LoadingScreen = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="flex flex-col items-center gap-4">
+      <div className="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+      <p className="text-sm font-medium text-muted-foreground">Loading workspace...</p>
+    </div>
+  </div>
+);
+
+const LazyPrescriptionBuilder = () => <Suspense fallback={<LoadingScreen />}><PrescriptionBuilderComp /></Suspense>;
+const LazyAnalyticsPage = () => <Suspense fallback={<LoadingScreen />}><AnalyticsPageComp /></Suspense>;
+const LazyCRMPage = () => <Suspense fallback={<LoadingScreen />}><CRMPageComp /></Suspense>;
+const CalendarPlaceholder = () => <div className="flex min-h-[80vh] items-center justify-center"><p className="text-muted-foreground">Calendar view — coming soon!</p></div>;
 
 function App() {
   return (
@@ -28,6 +51,7 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/pricing" element={<Pricing />} />
           
           {/* Auth Pages */}
           <Route path="/login" element={<Login />} />
@@ -40,9 +64,18 @@ function App() {
           {/* Doctor Workspace */}
           <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
           <Route path="/doctor/consultation/:id" element={<ConsultationRoom />} />
+          <Route path="/doctor/prescription" element={<LazyPrescriptionBuilder />} />
+          <Route path="/doctor/calendar" element={<CalendarPlaceholder />} />
+          
+          {/* Staff Workspaces */}
+          <Route path="/receptionist/dashboard" element={<ReceptionistDashboard />} />
+          <Route path="/lab/dashboard" element={<LabDashboard />} />
+          <Route path="/pharmacist/dashboard" element={<PharmacistDashboard />} />
           
           {/* Admin Workspace */}
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/analytics" element={<LazyAnalyticsPage />} />
+          <Route path="/admin/crm" element={<LazyCRMPage />} />
           <Route
             path="*"
             element={
